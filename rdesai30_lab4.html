@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>ITMD-4/565 Lab 4 - Canvas Drawing</title>
+	<style type="text/css">
+		#content-wrapper {
+			width: 600px;
+			margin: 0 auto;
+			text-align: center;
+		}
+		#canvasRun {
+			background-color: #c00;
+			border: 0;
+			color: #fff;
+		}
+	</style>
+</head>
+<body>
+	<div id="content-wrapper">
+		<button id="canvasRun">Draw Canvas</button><br><br>
+		<canvas id="myCanvas" width="600" height="450" ></canvas>
+	</div>
+	<script type="text/javascript">
+		// Canvas Drawing Code Here
+		document.addEventListener('DOMContentLoaded', function()
+		{
+			var canvas = document.getElementById('myCanvas');
+			var context=canvas.getContext("2d");
+			var rotateCounter =0;
+			function DrawCanvas()
+			{
+
+				if (canvas.getContext)
+				{
+					//background
+					var my_gradient = context.createLinearGradient(0,0,0,450);
+					my_gradient.addColorStop(0,"white");
+					my_gradient.addColorStop(1,"black");
+					context.fillStyle = my_gradient;
+					context.fillRect(0,0,600,450);
+
+					//title
+					context.font = '32px sans-serif';
+					context.fillStyle='#C80000';
+					context.fillText("HTML Canvas Demo", 140, 60);
+					context.strokeStyle = '#C80000';
+					context.lineWidth = '4';
+					context.beginPath();
+					context.moveTo(555,70);
+					context.lineTo(50,70);
+					context.stroke();
+
+					//circle
+					context.fillStyle='#0000C8';
+					context.strokeStyle = '#FFFFFF';
+					context.beginPath();
+					context.arc(100, 140, 50, 0, 2 * Math.PI);
+					context.stroke();
+					context.fill();
+					
+					//Triangle
+					context.fillStyle = '#00C800';
+					context.beginPath();
+					context.moveTo(50,350);
+					context.lineTo(100,250);
+					context.lineTo(160,350);
+					context.closePath();
+					context.fill();
+
+					//name and email
+					context.font = '14px sans-serif';
+					context.fillStyle='#FFFFFF';
+					context.fillText("Rohit Desai", 50, 400);
+					
+
+					//bottom image
+					var img = new Image();   
+					img.src = 'IIT_SAT_stack_186_white.png';
+				    context.drawImage(img, 280, 350,300,70);
+
+
+					//clear rect 
+					context.clearRect(250,240,320,100);
+
+					//Bezier curve
+					context.strokeStyle = '#000000';
+					context.beginPath();
+					context.lineWidth = '2';
+					context.setLineDash([10,3]);
+				    context.moveTo(270,300);
+				    context.bezierCurveTo(380, 190, 430, 380, 550, 300);
+				    context.stroke();
+
+ 
+					// arc animation
+					context.beginPath();
+					context.strokeStyle = '#000000';
+					context.strokeStyle = '#ffa500';
+					context.lineWidth = 15;
+					context.setLineDash([0,0]);
+					context.save();
+					context.translate(320, 160);
+					context.rotate(rotateCounter * (Math.PI/30));
+					context.arc(0, 0, 58, 0, 0.6 * Math.PI, false);
+					context.stroke();
+					context.restore();
+
+					// square animation 
+					context.beginPath();
+					context.strokeStyle = "#FFFFFF";
+					context.fillStyle = '#C80000';
+					context.lineWidth=5;
+					context.save();
+					context.translate(500, 160);
+					context.rotate(rotateCounter * (Math.PI / 300));
+					context.rect(-50,-50,100,100);
+					context.fill();
+					context.stroke();
+					context.restore();
+
+					rotateCounter+=1;
+
+					window.requestAnimationFrame(DrawCanvas);
+
+				}
+
+			}
+
+			document.getElementById('canvasRun').addEventListener('click', DrawCanvas, false);
+		}, false);
+
+	</script>
+</body>
+</html>
